@@ -12,6 +12,7 @@ import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
 import ru.stxima.openinghoursweb.ObjectMapperFactory
 import ru.stxima.openinghoursweb.TestResources
+import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
 
 /**
  * Integration tests for the [OpeningHoursController].

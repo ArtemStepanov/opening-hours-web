@@ -7,6 +7,8 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.OpeningHoursResponse
 import ru.stxima.openinghoursweb.service.openinghours.OpeningHoursDataService
 import ru.stxima.openinghoursweb.service.openinghours.OpeningHoursService
 import ru.stxima.openinghoursweb.util.DateTimeUtils

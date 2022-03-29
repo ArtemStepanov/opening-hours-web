@@ -1,6 +1,6 @@
 package ru.stxima.openinghoursweb.service.openinghours
 
-import ru.stxima.openinghoursweb.controller.openinghours.OpeningHoursRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.OpeningHoursRequest
 import ru.stxima.openinghoursweb.service.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequestValidationResult
 import java.time.DayOfWeek
 

@@ -3,9 +3,9 @@ package ru.stxima.openinghoursweb.service.openinghours.impl
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import ru.stxima.openinghoursweb.controller.openinghours.GetHumanReadableOpeningHoursFromRawDataRequest
-import ru.stxima.openinghoursweb.controller.openinghours.OpeningType
-import ru.stxima.openinghoursweb.controller.openinghours.OpeningHoursRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.OpeningType
+import ru.stxima.openinghoursweb.controller.openinghours.model.OpeningHoursRequest
 import ru.stxima.openinghoursweb.service.openinghours.OpeningHoursService
 import ru.stxima.openinghoursweb.service.openinghours.model.OpeningHours
 import ru.stxima.openinghoursweb.util.DateTimeUtils

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import ru.stxima.openinghoursweb.ObjectMapperFactory
 import ru.stxima.openinghoursweb.TestResources
-import ru.stxima.openinghoursweb.controller.openinghours.GetHumanReadableOpeningHoursFromRawDataRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
 import ru.stxima.openinghoursweb.service.openinghours.model.OpeningHours
 import java.time.DayOfWeek
 

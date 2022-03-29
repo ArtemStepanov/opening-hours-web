@@ -1,4 +1,4 @@
-package ru.stxima.openinghoursweb.controller.openinghours
+package ru.stxima.openinghoursweb.controller.openinghours.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.DayOfWeek
