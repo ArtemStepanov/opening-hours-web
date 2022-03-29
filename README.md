@@ -150,7 +150,7 @@ If you want to import this request to the Insomnia, please, follow the next step
 
 ## Feedback
 
-First, thank you for the opportunity to work with such an interesting assignment. It was very interesting to think
+First, thank you for the opportunity to work with such an interesting assignment. It was very competitive to think
 logically about its implementation.
 
 ### Few words about the request data structure
