@@ -10,16 +10,16 @@ data class GetHumanReadableOpeningHoursFromRawDataRequest(
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class OpeningHoursRequest(
-    val type: OpenType,
+    val type: OpeningType,
     val value: Int
 )
 
-enum class OpenType {
+data class OpeningHoursResponse(
+    val dayOfWeek: String,
+    val openingHoursRange: String
+)
+
+enum class OpeningType {
     OPEN,
     CLOSE
 }
-
-data class OpeningHoursResponse(
-    val dayOfWeek: String,
-    val openingHours: String
-)

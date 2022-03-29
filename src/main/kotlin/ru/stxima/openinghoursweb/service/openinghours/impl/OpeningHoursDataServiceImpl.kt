@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
-import ru.stxima.openinghoursweb.controller.openinghours.OpenType
+import ru.stxima.openinghoursweb.controller.openinghours.OpeningType
 import ru.stxima.openinghoursweb.controller.openinghours.OpeningHoursRequest
 import ru.stxima.openinghoursweb.service.openinghours.OpeningHoursDataService
 import ru.stxima.openinghoursweb.service.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequestValidationResult
@@ -45,17 +45,17 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
 
             // Here we validate if each OPEN has paired CLOSE and vice versa.
             LOGGER.trace("Validating that for each OPEN entry there are CLOSE entry exists")
-            validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpenType.OPEN)
+            validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpeningType.OPEN)
 
             LOGGER.trace("Validating that for each CLOSE entry there are OPEN entry exists")
-            validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpenType.CLOSE)
+            validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpeningType.CLOSE)
         }
 
         return GetHumanReadableOpeningHoursFromRawDataRequestValidationResult(errorMessages = errors)
     }
 
     /**
-     * Validate if all the [openType] has it opposite.
+     * Validate if all the [openingType] has it opposite.
      * E.g. all the openings has the closings and vice versa.
      * The method will the [errors] collection with [String] representation of an error.
      *
@@ -63,18 +63,18 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
      * @param requestSorted sorted request collection. Will be used to retrieve the next or previous day to check for a possible containing of opening/closing.
      * @param hoursSorted sorted collection of opening/closing hours for the [dayOfWeek].
      * @param errors errors collection.
-     * @param openType type to check opposites for. E.g. for [OpenType.OPEN] we will check all the paired [OpenType.CLOSE].
+     * @param openingType type to check opposites for. E.g. for [OpeningType.OPEN] we will check all the paired [OpeningType.CLOSE].
      */
     private fun validateClosingsOpenings(
         dayOfWeek: DayOfWeek,
         requestSorted: SortedMap<DayOfWeek, List<OpeningHoursRequest>>,
         hoursSorted: List<OpeningHoursRequest>,
         errors: MutableList<String>,
-        openType: OpenType
+        openingType: OpeningType
     ) {
-        val (left, right) = hoursSorted.partition { it.type == openType }
+        val (left, right) = hoursSorted.partition { it.type == openingType }
         for (currentHour in left) {
-            val oppositeHourForTheCurrentDay = if (openType == OpenType.OPEN) {
+            val oppositeHourForTheCurrentDay = if (openingType == OpeningType.OPEN) {
                 right.firstOrNull {
                     it.value > currentHour.value
                 }
@@ -85,38 +85,38 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
             }
 
             if (oppositeHourForTheCurrentDay == null) {
-                if (!checkIfOppositeHourIsOnTheNextOrPreviousDay(dayOfWeek, requestSorted, openType))
+                if (!checkIfOppositeHourIsOnTheNextOrPreviousDay(dayOfWeek, requestSorted, openingType))
                     errors.add(
-                        getOpeningErrorMessage(dayOfWeek, currentHour, openType)
+                        getOpeningErrorMessage(dayOfWeek, currentHour, openingType)
                     )
             }
         }
     }
 
     /**
-     * Function to check if opposite to [openType] is on the next or the previous day exists.
+     * Function to check if opposite to [openingType] is on the next or the previous day exists.
      *
      * @param dayOfWeek day of week to check the next or previous day for a possible containing of opening/closing.
      * @param requestSorted request data to retrieve information from, using [dayOfWeek].
-     * @param openType type to check opposites for. E.g. for [OpenType.OPEN] we will check that previous day contain [OpenType.CLOSE] as a last entry.
+     * @param openingType type to check opposites for. E.g. for [OpeningType.OPEN] we will check that previous day contain [OpeningType.CLOSE] as a last entry.
      *
-     * @return true if [openType] has it pair, otherwise false.
+     * @return true if [openingType] has it pair, otherwise false.
      */
     private fun checkIfOppositeHourIsOnTheNextOrPreviousDay(
         dayOfWeek: DayOfWeek,
         requestSorted: SortedMap<DayOfWeek, List<OpeningHoursRequest>>,
-        openType: OpenType
+        openingType: OpeningType
     ): Boolean {
-        val hour = if (openType == OpenType.OPEN) {
+        val hour = if (openingType == OpeningType.OPEN) {
             requestSorted[dayOfWeek.plus(1)]?.minByOrNull { it.value }
         } else {
             requestSorted[dayOfWeek.minus(1)]?.maxByOrNull { it.value }
         }
 
-        return hour?.type == if (openType == OpenType.OPEN) {
-            OpenType.CLOSE
+        return hour?.type == if (openingType == OpeningType.OPEN) {
+            OpeningType.CLOSE
         } else {
-            OpenType.OPEN
+            OpeningType.OPEN
         }
     }
 
@@ -149,9 +149,9 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
     private fun getOpeningErrorMessage(
         dayOfWeek: DayOfWeek,
         openingHoursRequest: OpeningHoursRequest,
-        openType: OpenType
+        openingType: OpeningType
     ): String {
-        val typeFormatted = if (openType == OpenType.OPEN) "closing" else "opening"
+        val typeFormatted = if (openingType == OpeningType.OPEN) "closing" else "opening"
 
         val hourValue = if (debugMode) {
             "${openingHoursRequest.value}"

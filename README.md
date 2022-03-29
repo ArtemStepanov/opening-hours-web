@@ -155,69 +155,77 @@ logically about its implementation.
 
 ### Few words about the request data structure
 
-I would rather use the next data structure:
+I suggest to use the next data structure:
 
 ```json
 {
   "monday": [
     {
       "opensAt": 3600,
-      "closesAt": 7200
+      "closesAt": 7200,
+      "type": "open-close"
     },
     {
       "opensAt": 37800,
-      "closesAt": 64800
+      "closesAt": 64800,
+      "type": "open-close"
     }
   ],
   "friday": [
     {
       "opensAt": 36000,
-      "closesAt": 3600
+      "closesAt": 3600,
+      "type": "open-close"
     }
   ]
 }
 ```
 
-Instead of:
+Possible values of the `type` field:
 
-```json
-{
-  "monday": [
-    {
-      "type": "open",
-      "value": 3600
-    },
-    {
-      "type": "close",
-      "value": 7200
-    },
-    {
-      "type": "open",
-      "value": 37800
-    },
-    {
-      "type": "close",
-      "value": 64800
-    }
-  ],
-  "friday": [
-    {
-      "type": "open",
-      "value": 36000
-    }
-  ],
-  "saturday": [
-    {
-      "type": "close",
-      "value": 3600
-    }
-  ]
-}
-```
+- `open-close` - basically, equivalent to the current `open` and `close`;
+- `close-lunch` - when a restaurant closes for a lunch;
+- `close-technically` - when a restaurant closes for a technical reasons.
 
 For the reason that, in fact, to display the correct data, we do not need to know the time intervals,
 we only need to know the specific hours when the restaurant was open and when it will be closed.
 And, if the format proposed above were used, then less code and logic would be required to implement the service.
+
+Additional converter required to make string `open-close` to enum `OPEN_CLOSE` conversion possible. Example code:
+```kotlin
+@Configuration
+class WebConfigurer : WebMvcConfigurer {
+
+    override fun addFormatters(registry: FormatterRegistry) {
+        registry.addConverter(StringDisplayNameToOpenTypeConverter())
+    }
+}
+
+@Controller
+class OpeningHoursController {
+
+  @GetMapping("/openinghours/{type}")
+  fun exampleFunction(@PathVariable("type") parameter: OpeningType) {
+    TODO("Implement method")
+  }
+}
+
+enum class OpeningType(val displayName: String) {
+    OPEN_CLOSE("open-close"),
+    CLOSE_LUNCH("close-lunch"),
+    CLOSE_TECHNICALLY("close-tech");
+
+    companion object {
+        fun fromDisplayName(displayName: String): OpeningType? =
+            values().firstOrNull { it.displayName == displayName }
+    }
+}
+
+class StringDisplayNameToOpenTypeConverter : Converter<String, OpeningType> {
+
+    override fun convert(source: String): OpeningType? = OpeningType.fromDisplayName(source)
+}
+```
 
 ### Some other comments related to the implementation
 

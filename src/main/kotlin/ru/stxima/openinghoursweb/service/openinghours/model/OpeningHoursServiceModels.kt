@@ -7,5 +7,5 @@ import java.time.DayOfWeek
  */
 data class OpeningHours(
     val dayOfWeek: DayOfWeek,
-    val openingHours: String
+    val openingHoursRange: String
 )

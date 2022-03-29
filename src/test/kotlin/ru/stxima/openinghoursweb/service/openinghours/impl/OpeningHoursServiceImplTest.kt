@@ -21,7 +21,7 @@ internal class OpeningHoursServiceImplTest {
         val expected = listOf(
             OpeningHours(
                 dayOfWeek = DayOfWeek.MONDAY,
-                openingHours = "6 PM - 1 AM"
+                openingHoursRange = "6 PM - 1 AM"
             ),
             *DayOfWeek.values()
                 // Skip Monday
@@ -29,7 +29,7 @@ internal class OpeningHoursServiceImplTest {
                 .map {
                     OpeningHours(
                         dayOfWeek = it,
-                        openingHours = "Closed"
+                        openingHoursRange = "Closed"
                     )
                 }
                 .toTypedArray()
@@ -53,13 +53,13 @@ internal class OpeningHoursServiceImplTest {
                 .map {
                     OpeningHours(
                         dayOfWeek = it,
-                        openingHours = "Closed"
+                        openingHoursRange = "Closed"
                     )
                 }
                 .toTypedArray(),
             OpeningHours(
                 dayOfWeek = DayOfWeek.SUNDAY,
-                openingHours = "6 PM - 1 AM"
+                openingHoursRange = "6 PM - 1 AM"
             )
         )
 
@@ -77,31 +77,31 @@ internal class OpeningHoursServiceImplTest {
         val expected = listOf(
             OpeningHours(
                 dayOfWeek = DayOfWeek.MONDAY,
-                openingHours = "Closed"
+                openingHoursRange = "Closed"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.TUESDAY,
-                openingHours = "10 AM - 6 PM"
+                openingHoursRange = "10 AM - 6 PM"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.WEDNESDAY,
-                openingHours = "Closed"
+                openingHoursRange = "Closed"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.THURSDAY,
-                openingHours = "10:30 AM - 6 PM"
+                openingHoursRange = "10:30 AM - 6 PM"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.FRIDAY,
-                openingHours = "10 AM - 1 AM"
+                openingHoursRange = "10 AM - 1 AM"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.SATURDAY,
-                openingHours = "10 AM - 1 AM"
+                openingHoursRange = "10 AM - 1 AM"
             ),
             OpeningHours(
                 dayOfWeek = DayOfWeek.SUNDAY,
-                openingHours = "12 PM - 9 PM, 11 PM - 1 AM"
+                openingHoursRange = "12 PM - 9 PM, 11 PM - 1 AM"
             )
         )
 

@@ -66,7 +66,7 @@ class OpeningHoursController(
         model["data"] = openingHours.map {
             OpeningHoursResponse(
                 dayOfWeek = DateTimeUtils.getDayOfWeekDisplayName(it.dayOfWeek),
-                openingHours = it.openingHours
+                openingHoursRange = it.openingHoursRange
             )
         }
 
