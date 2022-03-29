@@ -1,0 +1,24 @@
+{
+  "data": {
+    "tuesday": [
+      {
+        "type": "open",
+        "value": 43200
+      },
+      {
+        "type": "close",
+        "value": 64800
+      },
+      {
+        "type": "open",
+        "value": 75600
+      }
+    ],
+    "thursday": [
+      {
+        "type": "close",
+        "value": 3600
+      }
+    ]
+  }
+}

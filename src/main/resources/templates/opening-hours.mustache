@@ -1,0 +1,10 @@
+{{> header}}
+<h1>A restaurant is open:</h1>
+<ul>
+    {{#data}}
+    <li>
+        {{dayOfWeek}}: {{openingHoursRange}}
+    </li>
+    {{/data}}
+</ul>
+{{> footer}}
