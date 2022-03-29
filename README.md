@@ -18,6 +18,10 @@ currently contains only one controller and one method to work with, but it can b
 
 ### Build
 
+Service uses Java 11, so make sure to install it first.
+You can download it here: [Adoptium](https://adoptium.net/temurin/archive). Please choose OpenJDK 11 as a version
+and download and install a package, related to your system.
+
 To **build** a service you should run the next command from the source root folder:
 
 ```
