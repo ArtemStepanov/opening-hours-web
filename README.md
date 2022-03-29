@@ -193,6 +193,15 @@ And, if the format proposed above were used, then less code and logic would be r
 
 Additional converter required to make string `open-close` to enum `OPEN_CLOSE` conversion possible. Example code:
 ```kotlin
+@Controller
+class OpeningHoursController {
+
+  @GetMapping("/openinghours/{type}")
+  fun exampleFunction(@PathVariable("type") parameter: OpeningType) {
+    TODO("Implement method")
+  }
+}
+
 @Configuration
 class WebConfigurer : WebMvcConfigurer {
 
@@ -201,13 +210,9 @@ class WebConfigurer : WebMvcConfigurer {
     }
 }
 
-@Controller
-class OpeningHoursController {
+class StringDisplayNameToOpenTypeConverter : Converter<String, OpeningType> {
 
-  @GetMapping("/openinghours/{type}")
-  fun exampleFunction(@PathVariable("type") parameter: OpeningType) {
-    TODO("Implement method")
-  }
+  override fun convert(source: String): OpeningType? = OpeningType.fromDisplayName(source)
 }
 
 enum class OpeningType(val displayName: String) {
@@ -219,11 +224,6 @@ enum class OpeningType(val displayName: String) {
         fun fromDisplayName(displayName: String): OpeningType? =
             values().firstOrNull { it.displayName == displayName }
     }
-}
-
-class StringDisplayNameToOpenTypeConverter : Converter<String, OpeningType> {
-
-    override fun convert(source: String): OpeningType? = OpeningType.fromDisplayName(source)
 }
 ```
 
