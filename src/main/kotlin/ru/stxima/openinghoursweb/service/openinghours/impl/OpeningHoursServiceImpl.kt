@@ -1,17 +1,22 @@
 package ru.stxima.openinghoursweb.service.openinghours.impl
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import ru.stxima.openinghoursweb.controller.openinghours.GetHumanReadableOpeningHoursFromRawDataRequest
 import ru.stxima.openinghoursweb.controller.openinghours.OpenType
 import ru.stxima.openinghoursweb.controller.openinghours.OpeningHoursRequest
-import ru.stxima.openinghoursweb.service.openinghours.model.OpeningHours
 import ru.stxima.openinghoursweb.service.openinghours.OpeningHoursService
+import ru.stxima.openinghoursweb.service.openinghours.model.OpeningHours
 import ru.stxima.openinghoursweb.util.DateTimeUtils
 import java.time.DayOfWeek
 
 @Service
 class OpeningHoursServiceImpl : OpeningHoursService {
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(OpeningHoursServiceImpl::class.java)
+    }
 
     @Value("\${openinghours.debug-mode}")
     private val debugMode: Boolean = false
@@ -19,14 +24,20 @@ class OpeningHoursServiceImpl : OpeningHoursService {
     override fun convertOpeningHoursRawDataToReadableFormat(
         openingHoursFromRawDataRequest: GetHumanReadableOpeningHoursFromRawDataRequest
     ): List<OpeningHours> {
+        LOGGER.trace("Debug mode is {}", (if (debugMode) "enabled" else "disabled"))
+
         val data = mutableListOf<OpeningHours>()
         val rawData = openingHoursFromRawDataRequest.data
 
         for (dayOfWeek in DayOfWeek.values()) {
+            LOGGER.trace("Processing day '{}'", dayOfWeek)
+
             val hours = rawData[dayOfWeek] ?: emptyList()
             val hoursSortedMutable = hours
                 .sortedBy { it.value }
                 .toMutableList()
+
+            LOGGER.trace("Day '{}' contains {} entries", dayOfWeek, hoursSortedMutable.size)
 
             if (hoursSortedMutable.firstOrNull()?.type == OpenType.CLOSE)
                 hoursSortedMutable.removeFirst()
@@ -44,6 +55,7 @@ class OpeningHoursServiceImpl : OpeningHoursService {
 
             // If the last entry is OPEN, then we add a CLOSE entry to the collection from the next day
             if (hoursSortedMutable.lastOrNull()?.type == OpenType.OPEN) {
+                LOGGER.trace("Moving closing time from {} to {}", dayOfWeek.plus(1), dayOfWeek)
                 val closeTime = getCloseTimeFromTheNextDay(dayOfWeek, openingHoursFromRawDataRequest.data)
                 hoursSortedMutable.add(closeTime)
             }

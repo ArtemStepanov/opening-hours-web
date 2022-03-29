@@ -5,6 +5,7 @@
     - [Build](#build)
     - [Test](#test)
     - [Run](#run)
+    - [Logging](#logging)
 - [Request the data](#request-the-data)
 - [Technologies](#technologies)
 - [Feedback](#feedback)
@@ -48,6 +49,16 @@ gradlew bootRun
 ```
 
 Once launched, the application will be available at the following address: `http://localhost:8080`
+
+### Logging
+
+The service has trace logs to check the steps.
+To enable the display of trace logs, you need to set
+a property
+```
+logging.level.ru.stxima.openinghoursweb=TRACE
+```
+in the `resources/application.properties` properties file.
 
 ## Request the data
 

@@ -1,5 +1,6 @@
 package ru.stxima.openinghoursweb.service.openinghours.impl
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
@@ -19,6 +20,8 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
     private val debugMode: Boolean = false
 
     companion object {
+        private val LOGGER = LoggerFactory.getLogger(OpeningHoursDataServiceImpl::class.java)
+
         private const val MAX_TIME_VALUE = 86399
         private const val MIN_TIME_VALUE = 0
     }
@@ -28,16 +31,23 @@ class OpeningHoursDataServiceImpl : OpeningHoursDataService {
     ): GetHumanReadableOpeningHoursFromRawDataRequestValidationResult {
         val errors = mutableListOf<String>()
 
+        LOGGER.trace("Validating request parameters")
         if (!validateRequestParameters(request, errors)) {
+            LOGGER.trace("Some of request parameters are invalid")
             return GetHumanReadableOpeningHoursFromRawDataRequestValidationResult(errors)
         }
+
+        LOGGER.trace("Request parameters were validated successfully")
 
         val requestSorted = request.toSortedMap()
         for ((dayOfWeek, hours) in requestSorted) {
             val hoursSorted = hours.sortedBy { it.value }
 
             // Here we validate if each OPEN has paired CLOSE and vice versa.
+            LOGGER.trace("Validating that for each OPEN entry there are CLOSE entry exists")
             validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpenType.OPEN)
+
+            LOGGER.trace("Validating that for each CLOSE entry there are OPEN entry exists")
             validateClosingsOpenings(dayOfWeek, requestSorted, hoursSorted, errors, OpenType.CLOSE)
         }
 
