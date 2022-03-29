@@ -13,10 +13,10 @@ object DateTimeUtils {
     private val dateFormatWithMinutes = DateTimeFormatter.ofPattern("h:mm a")
 
     /**
-     * Convert unix time to the 'hh a' or 'hh:mm a' time format
+     * Convert unix time to the 'hh a' or 'hh:mm a' time format.
      *
-     * @param unixTime unix time
-     * @return Formatted time string
+     * @param unixTime unix time.
+     * @return Formatted time string.
      */
     fun fromUnixTimeToString(unixTime: Long): String {
         val instant = Instant.ofEpochSecond(unixTime).atZone(ZoneOffset.UTC)
@@ -24,10 +24,10 @@ object DateTimeUtils {
     }
 
     /**
-     * Get display name of the specified [DayOfWeek]
+     * Get display name of the specified [DayOfWeek].
      *
-     * @param dayOfWeek day of week to get display name for
-     * @return Display name
+     * @param dayOfWeek day of week to get display name for.
+     * @return Display name.
      */
     fun getDayOfWeekDisplayName(dayOfWeek: DayOfWeek): String = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
 }

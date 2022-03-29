@@ -7,10 +7,10 @@ import java.time.DayOfWeek
 interface OpeningHoursDataService {
 
     /**
-     * Validate request data and prepare service-ready data that will be parsed by [OpeningHoursService]
+     * Validate request data and prepare service-ready data that will be parsed by [OpeningHoursService].
      *
-     * @param request raw request data
-     * @return [GetHumanReadableOpeningHoursFromRawDataRequestValidationResult] representing validation status
+     * @param request raw request data.
+     * @return [GetHumanReadableOpeningHoursFromRawDataRequestValidationResult] representing validation status.
      */
     fun validateAndPrepareDataForGetHumanReadableOpeningHoursRequest(
         request: Map<DayOfWeek, List<OpeningHoursRequest>>

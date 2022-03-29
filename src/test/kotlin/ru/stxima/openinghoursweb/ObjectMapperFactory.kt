@@ -6,7 +6,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 /**
- * Factory for the [ObjectMapper]
+ * Factory for the [ObjectMapper].
  */
 object ObjectMapperFactory {
 

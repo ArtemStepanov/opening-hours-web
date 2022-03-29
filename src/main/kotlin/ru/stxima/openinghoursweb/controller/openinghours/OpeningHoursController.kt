@@ -21,14 +21,15 @@ class OpeningHoursController(
      * Get human-readable restaurant opening hours from the raw data.
      * If no data is defined, method will return 'no-data' view.
      *
-     * @param openingHoursFromRawDataRequest raw restaurant data
+     * @param openingHoursFromRawDataRequest raw restaurant data.
+     * @return View that is related to the response data.
      */
     @PostMapping
     fun getRestaurantOpeningHoursFromRawData(
         @RequestBody openingHoursFromRawDataRequest: GetHumanReadableOpeningHoursFromRawDataRequest,
         model: Model
     ): String {
-        // If request contains no related data for the restaurant
+        // If request contains no related data for the restaurant.
         if (openingHoursFromRawDataRequest.data.isEmpty()) {
             model["title"] = "No data for the specified restaurant"
 

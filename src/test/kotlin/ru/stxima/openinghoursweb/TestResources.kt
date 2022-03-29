@@ -1,7 +1,7 @@
 package ru.stxima.openinghoursweb
 
 /**
- * Class to store all the test resources
+ * Class to store all the test resources.
  */
 class TestResources {
 
