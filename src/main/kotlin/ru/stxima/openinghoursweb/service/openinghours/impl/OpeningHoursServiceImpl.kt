@@ -28,7 +28,6 @@ class OpeningHoursServiceImpl : OpeningHoursService {
         LOGGER.trace("Validating data")
 
         val rawData = request.data
-        // val validationErrors = test(request)
         val validationErrors = validate(rawData)
         if (validationErrors.any()) {
             return ProcessingResult(
@@ -63,7 +62,7 @@ class OpeningHoursServiceImpl : OpeningHoursService {
                 continue
             }
 
-            // If the last entry is OPEN, then we add a CLOSE entry to the collection from the next day
+            // If the last entry is OPEN, then we add a CLOSE entry to the collection from the next day.
             if (hoursSortedMutable.lastOrNull()?.type == OpeningType.OPEN) {
                 LOGGER.trace("Moving closing time from {} to {}", dayOfWeek.plus(1), dayOfWeek)
                 val closeTime = getCloseTimeFromTheNextDay(dayOfWeek, request.data)
@@ -119,7 +118,7 @@ class OpeningHoursServiceImpl : OpeningHoursService {
     ): String {
         val dataList = mutableListOf<String>()
         // We can use 'windowed' here because we can be sure, that all the data passed validation
-        // and all the openings hours have paired closing hours
+        // and all the openings hours have paired closing hours.
         val sortedAndWindowedHours = hours.windowed(2, 2)
         for ((current, next) in sortedAndWindowedHours) {
             dataList.add(
