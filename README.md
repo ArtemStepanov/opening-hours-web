@@ -12,8 +12,7 @@
 
 ## About
 
-The service is used to convert the restaurant's raw business hours in JSON format into a human-readable format. It
-currently contains only one controller and one method to work with, but it can be extended as needed.
+Service-implementation of the restaurant's raw business hours in JSON format converting into a human-readable format.
 
 ## Build and run
 
@@ -153,9 +152,18 @@ If you want to import this request to the Insomnia, please, follow the next step
 First, thank you for the opportunity to work with such an interesting assignment. It was very competitive to think
 logically about its implementation.
 
+### Another one solution
+
+I know of another solution to this assignment.
+We can make a flat list from a request, sort it by `dayOfWeek` and then by `value`,
+iterate over it, defining an open-close alternation and validating data.
+I tried to implement it, but the implementation of edge cases seemed difficult for me,
+I could not find a nice and easy to read solution for this.
+Therefore, I used a different approach presented in the solution.
+
 ### Few words about the request data structure
 
-I suggest to use the next data structure:
+I suggest using the next data structure:
 
 ```json
 {
@@ -206,11 +214,11 @@ class OpeningHoursController {
 class WebConfigurer : WebMvcConfigurer {
 
     override fun addFormatters(registry: FormatterRegistry) {
-        registry.addConverter(StringDisplayNameToOpenTypeConverter())
+        registry.addConverter(StringToOpenTypeConverter())
     }
 }
 
-class StringDisplayNameToOpenTypeConverter : Converter<String, OpeningType> {
+class StringToOpenTypeConverter : Converter<String, OpeningType> {
 
   override fun convert(source: String): OpeningType? = OpeningType.fromDisplayName(source)
 }
