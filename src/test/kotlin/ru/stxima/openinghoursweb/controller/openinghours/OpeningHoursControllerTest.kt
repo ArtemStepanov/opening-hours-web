@@ -12,7 +12,7 @@ import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
 import ru.stxima.openinghoursweb.ObjectMapperFactory
 import ru.stxima.openinghoursweb.TestResources
-import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.ConvertOpeningHoursRequest
 
 /**
  * Integration tests for the [OpeningHoursController].
@@ -53,7 +53,7 @@ internal class OpeningHoursControllerTest(
         assertNotNull(responseResource, "Response resource was not found")
 
         val requestModel =
-            objectMapper.readValue<GetHumanReadableOpeningHoursFromRawDataRequest>(requestResource!!)
+            objectMapper.readValue<ConvertOpeningHoursRequest>(requestResource!!)
 
         val response = restTemplate.postForEntity<String>("/openinghours", requestModel)
         assertEquals(HttpStatus.OK, response.statusCode, "Status code is not OK")
@@ -85,7 +85,7 @@ internal class OpeningHoursControllerTest(
         assertNotNull(responseResource, "Response resource was not found")
 
         val requestModel =
-            objectMapper.readValue<GetHumanReadableOpeningHoursFromRawDataRequest>(requestResource!!)
+            objectMapper.readValue<ConvertOpeningHoursRequest>(requestResource!!)
 
         val response = restTemplate.postForEntity<String>("/openinghours", requestModel)
         assertEquals(HttpStatus.OK, response.statusCode, "Status code is not OK")
@@ -97,7 +97,7 @@ internal class OpeningHoursControllerTest(
     fun `Test requesting no-data return no data page`() {
         val response = restTemplate.postForEntity<String>(
             "/openinghours",
-            GetHumanReadableOpeningHoursFromRawDataRequest(
+            ConvertOpeningHoursRequest(
                 emptyMap()
             )
         )

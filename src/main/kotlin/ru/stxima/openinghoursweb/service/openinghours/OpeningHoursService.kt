@@ -1,17 +1,18 @@
 package ru.stxima.openinghoursweb.service.openinghours
 
-import ru.stxima.openinghoursweb.controller.openinghours.model.GetHumanReadableOpeningHoursFromRawDataRequest
+import ru.stxima.openinghoursweb.controller.openinghours.model.ConvertOpeningHoursRequest
 import ru.stxima.openinghoursweb.service.openinghours.model.OpeningHours
+import ru.stxima.openinghoursweb.service.openinghours.model.ProcessingResult
 
 interface OpeningHoursService {
 
     /**
      * Convert prepared request data to the human-readable format.
      *
-     * @param openingHoursFromRawDataRequest raw request data.
+     * @param request raw request data.
      * @return [List] of [OpeningHours] - parsed format that will be displayed on UI.
      */
-    fun convertOpeningHoursRawDataToReadableFormat(
-        openingHoursFromRawDataRequest: GetHumanReadableOpeningHoursFromRawDataRequest
-    ): List<OpeningHours>
+    fun validateAndProcess(
+        request: ConvertOpeningHoursRequest
+    ): ProcessingResult
 }
