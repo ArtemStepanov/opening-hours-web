@@ -1,0 +1,16 @@
+{
+  "data": {
+    "monday": [
+      {
+        "type": "open",
+        "value": 64800
+      }
+    ],
+    "tuesday": [
+      {
+        "type": "close",
+        "value": 3600
+      }
+    ]
+  }
+}
